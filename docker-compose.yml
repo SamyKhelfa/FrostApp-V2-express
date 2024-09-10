@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    hostname: postgres
+    container_name: frost-app-express-db
+    restart: always
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:
+    name: frost-app-express-db-data

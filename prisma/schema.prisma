@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" 
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -13,4 +13,24 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  lessons   Lesson[]
+}
+
+model Lesson {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  users       User[]
+  chapters    Chapter[]
+}
+
+model Chapter {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String
+  image       String
+  status      Boolean
+  position    Int
+  Lesson      Lesson? @relation(fields: [lessonId], references: [id])
+  lessonId    Int?
 }

@@ -1,18 +1,19 @@
 import express from 'express';
-import { router as registerRouter } from './routes/register';
-import { router as loginRouter } from './routes/login';
-import { router as userRouter } from './routes/user';
+import appRouter from './routes'
+import cors from "cors";
+
+import './config/db'
 
 const app = express();
-const port = 3000;
+const port = 5050;
 
 app.use(express.json());  // Pour parser le JSON dans le corps des requêtes
+app.use(cors({ 
+    origin: '*'
+ }))
 
-app.use('/auth', registerRouter);
-app.use('/auth', loginRouter);
-app.use('/user', userRouter);
+app.use('/', appRouter)
 
-
-const server = app.listen(port, () => {
+app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
